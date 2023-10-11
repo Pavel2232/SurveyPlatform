@@ -1,0 +1,1051 @@
+openapi: 3.0.3
+info:
+  title: Survey PlatfotmAPI
+  version: 0.0.0
+paths:
+  /api/schema/:
+    get:
+      operationId: api_schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /survey/{id}:
+    get:
+      operationId: survey_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - survey
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveySerializers'
+          description: ''
+    put:
+      operationId: survey_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - survey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SurveySerializers'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SurveySerializers'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SurveySerializers'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveySerializers'
+          description: ''
+    patch:
+      operationId: survey_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - survey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSurveySerializers'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSurveySerializers'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSurveySerializers'
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveySerializers'
+          description: ''
+    delete:
+      operationId: survey_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - survey
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /survey/alerts/:
+    get:
+      operationId: survey_alerts_list
+      tags:
+      - survey
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Alert'
+          description: ''
+  /survey/create/:
+    post:
+      operationId: survey_create_create
+      tags:
+      - survey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSurvey'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateSurvey'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateSurvey'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateSurvey'
+          description: ''
+  /survey/like/:
+    post:
+      operationId: survey_like_create
+      tags:
+      - survey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MakeMark'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MakeMark'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MakeMark'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MakeMark'
+          description: ''
+  /survey/list/:
+    get:
+      operationId: survey_list_list
+      parameters:
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - survey
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SurveySerializers'
+          description: ''
+  /survey/question/{id}/:
+    get:
+      operationId: survey_question_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - survey
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuestionSerializers'
+          description: ''
+    put:
+      operationId: survey_question_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - survey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuestionSerializers'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/QuestionSerializers'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/QuestionSerializers'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuestionSerializers'
+          description: ''
+    patch:
+      operationId: survey_question_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - survey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedQuestionSerializers'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedQuestionSerializers'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedQuestionSerializers'
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuestionSerializers'
+          description: ''
+    delete:
+      operationId: survey_question_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - survey
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /survey/question/create/:
+    post:
+      operationId: survey_question_create_create
+      tags:
+      - survey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateQuestion'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateQuestion'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateQuestion'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateQuestion'
+          description: ''
+  /survey/question/list/:
+    get:
+      operationId: survey_question_list_list
+      tags:
+      - survey
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/QuestionSerializers'
+          description: ''
+  /survey/user/not_viewed/:
+    get:
+      operationId: survey_user_not_viewed_list
+      tags:
+      - survey
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SurveySerializers'
+          description: ''
+  /user/login:
+    post:
+      operationId: user_login_create
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LoginUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LoginUser'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginUser'
+          description: ''
+  /user/profile:
+    get:
+      operationId: user_profile_retrieve
+      tags:
+      - user
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditProfile'
+          description: ''
+    put:
+      operationId: user_profile_update
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditProfile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EditProfile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EditProfile'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditProfile'
+          description: ''
+    patch:
+      operationId: user_profile_partial_update
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedEditProfile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedEditProfile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedEditProfile'
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditProfile'
+          description: ''
+    delete:
+      operationId: user_profile_destroy
+      tags:
+      - user
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /user/signup:
+    post:
+      operationId: user_signup_create
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SingupUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SingupUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SingupUser'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SingupUser'
+          description: ''
+  /user/update_password:
+    put:
+      operationId: user_update_password_update
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UptadePassword'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UptadePassword'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UptadePassword'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UptadePassword'
+          description: ''
+    patch:
+      operationId: user_update_password_partial_update
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUptadePassword'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUptadePassword'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUptadePassword'
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UptadePassword'
+          description: ''
+components:
+  schemas:
+    Alert:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user_to:
+          type: string
+          title: Никнейм
+          readOnly: true
+        text_alert:
+          allOf:
+          - $ref: '#/components/schemas/TextAlertEnum'
+          title: Уведомление
+      required:
+      - id
+      - text_alert
+      - user_to
+    CreateQuestion:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        surveys:
+          type: array
+          items:
+            type: integer
+        answer:
+          type: string
+          readOnly: true
+        text_question:
+          type: string
+          title: Текст вопроса
+      required:
+      - answer
+      - id
+      - surveys
+      - text_question
+    CreateSurvey:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Название опроса
+          maxLength: 500
+        description:
+          type: string
+          title: Описание опроса
+      required:
+      - id
+      - title
+    EditProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          title: Почта
+          maxLength: 255
+        username:
+          type: string
+          title: Никнейм
+          maxLength: 200
+      required:
+      - email
+      - id
+      - username
+    LoginUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+          title: Почта
+        username:
+          type: string
+        password:
+          type: string
+      required:
+      - email
+      - id
+      - password
+      - username
+    MakeMark:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        survey:
+          type: string
+          title: Название опроса
+        mark:
+          allOf:
+          - $ref: '#/components/schemas/MarkEnum'
+          title: Отметка
+      required:
+      - id
+      - survey
+    MarkEnum:
+      enum:
+      - Like
+      - Dislike
+      - Nothing
+      type: string
+      description: |-
+        * `Like` - Нравится
+        * `Dislike` - Не нравится
+        * `Nothing` - Нет отметки
+    PatchedEditProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          title: Почта
+          maxLength: 255
+        username:
+          type: string
+          title: Никнейм
+          maxLength: 200
+    PatchedQuestionSerializers:
+      type: object
+      properties:
+        surveys:
+          type: array
+          items:
+            type: string
+            title: Название опроса
+        text_question:
+          type: string
+          title: Текст вопроса
+        answer:
+          type: string
+          readOnly: true
+        id:
+          type: integer
+          readOnly: true
+    PatchedSurveySerializers:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          type: string
+          title: Никнейм
+          readOnly: true
+        questions:
+          type: string
+          readOnly: true
+        answer:
+          type: string
+          readOnly: true
+        like:
+          type: string
+          readOnly: true
+        dislike:
+          type: string
+          readOnly: true
+        view:
+          type: string
+          readOnly: true
+        title:
+          type: string
+          title: Название опроса
+          maxLength: 500
+        description:
+          type: string
+          title: Описание опроса
+    PatchedUptadePassword:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+          title: Почта
+        new_password:
+          type: string
+          maxLength: 100
+        old_password:
+          type: string
+          writeOnly: true
+          maxLength: 100
+        username:
+          type: string
+          readOnly: true
+          title: Никнейм
+    QuestionSerializers:
+      type: object
+      properties:
+        surveys:
+          type: array
+          items:
+            type: string
+            title: Название опроса
+        text_question:
+          type: string
+          title: Текст вопроса
+        answer:
+          type: string
+          readOnly: true
+        id:
+          type: integer
+          readOnly: true
+      required:
+      - answer
+      - id
+      - surveys
+      - text_question
+    SingupUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          title: Почта
+          maxLength: 255
+        password:
+          type: string
+          writeOnly: true
+          maxLength: 100
+        password_repeat:
+          type: string
+          writeOnly: true
+          maxLength: 100
+        username:
+          type: string
+          title: Никнейм
+          maxLength: 200
+      required:
+      - email
+      - id
+      - password
+      - password_repeat
+      - username
+    SurveySerializers:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          type: string
+          title: Никнейм
+          readOnly: true
+        questions:
+          type: string
+          readOnly: true
+        answer:
+          type: string
+          readOnly: true
+        like:
+          type: string
+          readOnly: true
+        dislike:
+          type: string
+          readOnly: true
+        view:
+          type: string
+          readOnly: true
+        title:
+          type: string
+          title: Название опроса
+          maxLength: 500
+        description:
+          type: string
+          title: Описание опроса
+      required:
+      - answer
+      - dislike
+      - id
+      - like
+      - questions
+      - title
+      - user
+      - view
+    TextAlertEnum:
+      enum:
+      - Like
+      - Dislike
+      - View
+      type: string
+      description: |-
+        * `Like` - Нравится
+        * `Dislike` - Не нравится
+        * `View` - Просмотрено
+    UptadePassword:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+          title: Почта
+        new_password:
+          type: string
+          maxLength: 100
+        old_password:
+          type: string
+          writeOnly: true
+          maxLength: 100
+        username:
+          type: string
+          readOnly: true
+          title: Никнейм
+      required:
+      - email
+      - id
+      - new_password
+      - old_password
+      - username
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid

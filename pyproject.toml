@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "surveyplatform"
+version = "0.1.0"
+description = ""
+authors = ["Pavel2232 <106510078+Pavel2232@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^4.2.6"
+django-environ = "^0.11.2"
+djangorestframework = "^3.14.0"
+django-filter = "^23.3"
+social-auth-app-django = "^5.3.0"
+psycopg2 = "^2.9.9"
+drf-spectacular = "^0.26.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
